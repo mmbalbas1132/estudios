@@ -1,3 +1,19 @@
 <div>
-    {{-- A good traveler has no fixed plans and is not intent upon arriving. --}}
+    <h2>Listado de Asignaturas</h2>
+   <table>
+
+           <tr>
+               <th>Nombre</th>
+               <th>Descripción</th>
+           </tr>
+       @foreach ($asignaturas as $asignatura)
+       <tr>
+         <td>{{ $asignatura->nombre }}</td>
+           <td>{{ $asignatura->descripcion }}</td>
+       </tr>
+
+
+        @endforeach
+        </table>
 </div>
+
