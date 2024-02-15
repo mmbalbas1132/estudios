@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Asignatura extends Model
+class Respuesta extends Model
 {
     use HasFactory;
 
@@ -14,13 +14,13 @@ class Asignatura extends Model
      *
      * @var array
      */
-    protected $fillable = ['nombre', 'descripcion'];
+    protected $fillable = ['respuesta', 'es_correcta', 'pregunta_id'];
 
     /**
-     * Get the temas for the asignatura.
+     * Get the pregunta that owns the respuesta.
      */
-    public function temas()
+    public function pregunta()
     {
-        return $this->hasMany(Tema::class);
+        return $this->belongsTo(Pregunta::class);
     }
 }
