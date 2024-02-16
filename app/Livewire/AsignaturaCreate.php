@@ -1,39 +1,35 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Http\Livewire;
 
 use App\Models\Asignatura;
-use App\Models\User;
 use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
 
 class AsignaturaCreate extends Component
 {
     public $nombre;
     public $descripcion;
-    public $asignatura;
 
-    public function mount()
-    {
-        $this->asignatura = new Asignatura();
-    }
+    protected $rules = [
+        'nombre' => 'required',
+        'descripcion' => 'required',
+    ];
 
     public function save()
     {
-        $this->validate([
-            'nombre' => 'required',
-            'descripcion' => 'required'
-        ]);
+        $this->validate();
 
         $asignatura = Asignatura::create([
             'nombre' => $this->nombre,
-            'descripcion' => $this->descripcion
+            'descripcion' => $this->descripcion,
         ]);
 
-        // Accede al usuario actualmente autenticado
-        $user = auth()->user();
+        // Asocia la asignatura con el usuario autenticado
+        Auth::user()->asignaturas()->attach($asignatura->id);
 
-        // Asocia la asignatura con el usuario
-        $user->asignaturas()->attach($asignatura->id);
+        // Proporciona una retroalimentación al usuario
+        session()->flash('message', 'Asignatura creada correctamente.');
 
         return redirect()->to('/asignaturas');
     }
@@ -42,11 +38,4 @@ class AsignaturaCreate extends Component
     {
         return view('livewire.asignatura-create')->layout('layouts.app');
     }
-
-    public function assignToUser($userId, $asignaturaId)
-    {
-        $user = User::find($userId);
-        $user->asignaturas()->attach($asignaturaId);
-    }
-
 }
