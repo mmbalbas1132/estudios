@@ -23,4 +23,8 @@ class Asignatura extends Model
     {
         return $this->hasMany(Tema::class);
     }
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_asignatura');
+    }
 }

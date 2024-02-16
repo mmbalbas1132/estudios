@@ -1,5 +1,8 @@
 <?php
 
+use App\Livewire\AsignaturaAssing;
+use App\Livewire\AsignaturaCreate;
+use App\Livewire\AsignaturaEdit;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\AsignaturasIndex;
 
@@ -27,7 +30,15 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
-Route::get('/asignaturas', AsignaturasIndex::class)->name('asignaturas.index');
+
+Route::prefix('asignaturas')->group(function () {
+    Route::get('/', AsignaturasIndex::class)->name('asignaturas.index');
+    Route::get('/create', AsignaturaCreate::class)->name('asignaturas.create');
+    Route::get('/{asignatura}/edit', AsignaturaEdit::class)->name('asignaturas.edit');
+    Route::get('/{asignatura}/delete', AsignaturaEdit::class)->name('asignaturas.delete');
+    Route::get('/{asignatura}/assign', AsignaturaAssing::class)->name('asignaturas.assign');
+});
+
 
 
 
