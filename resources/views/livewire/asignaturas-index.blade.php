@@ -22,4 +22,5 @@
         @endforeach
         </tbody>
     </table>
+    {{ $asignaturas->links() }} <!-- Links de paginación -->
 </div>
