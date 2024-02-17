@@ -11,6 +11,7 @@ class AsignaturaEdit extends Component
     public $nombre;
     public $descripcion;
 
+
     public function mount(Asignatura $asignatura)
     {
         $this->asignaturaId = $asignatura->id;
