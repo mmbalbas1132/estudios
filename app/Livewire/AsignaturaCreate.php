@@ -10,29 +10,20 @@ class AsignaturaCreate extends Component
 {
     public $nombre;
     public $descripcion;
-    public $asignatura; // Agrega esta línea
-
-    protected $rules = [
-        'nombre' => 'required',
-        'descripcion' => 'required',
-    ];
+    public $asignatura;
 
     public function save()
     {
-        $this->validate();
-
-        $this->asignatura = Asignatura::create([ // Modifica esta línea
-            'nombre' => $this->nombre,
-            'descripcion' => $this->descripcion,
+        $validatedData = $this->validate([
+            'nombre' => 'required|unique:asignaturas,nombre|max:255',
+            'descripcion' => 'required|max:1024',
         ]);
 
-        // Asocia la asignatura con el usuario autenticado
-        Auth::user()->asignaturas()->attach($this->asignatura->id);
+        $asignatura = Asignatura::create($validatedData);
 
-        // Proporciona una retroalimentación al usuario
-        session()->flash('message', 'Asignatura creada correctamente.');
+        Auth::user()->asignaturas()->attach($asignatura->id);
 
-        return redirect()->to('/asignaturas');
+        return redirect('/asignaturas')->with('message', 'Asignatura creada correctamente.');
     }
 
     public function render()
