@@ -21,6 +21,6 @@ class AsignaturaDelete extends Component
 
     public function render()
     {
-        return view('livewire.asignatura-delete');
+        return view('livewire.asignatura-delete')->layout('layouts.app');
     }
 }
